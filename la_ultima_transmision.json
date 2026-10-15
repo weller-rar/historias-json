@@ -1,0 +1,103 @@
+{
+  "titulo": "La última transmisión",
+  "inicio": "E1",
+  "variables": {
+    "conoce_origen": false,
+    "confia_en_la_voz": false
+  },
+  "escenas": [
+    {
+      "id": "E1",
+      "texto": "Son las 02:13. Una voz pide ayuda desde la estación Aurora, abandonada hace veinte años. La operadora decide revisar la transmisión.",
+      "final": false,
+      "opciones": [
+        {
+          "id": "revisar",
+          "texto": "Revisar señal",
+          "destino": "E2",
+          "condiciones": {},
+          "efectos": {}
+        }
+      ]
+    },
+    {
+      "id": "E2",
+      "texto": "La señal incluye un código antiguo. Es posible consultar el archivo para averiguar su procedencia o continuar sin investigar.",
+      "final": false,
+      "opciones": [
+        {
+          "id": "investigar",
+          "texto": "Investigar archivo",
+          "destino": "E3",
+          "condiciones": {},
+          "efectos": {
+            "conoce_origen": true
+          }
+        },
+        {
+          "id": "continuar",
+          "texto": "Continuar sin investigar",
+          "destino": "E3",
+          "condiciones": {},
+          "efectos": {}
+        }
+      ]
+    },
+    {
+      "id": "E3",
+      "texto": "La voz pide activar la antena. Con la información disponible, la operadora debe decidir si confía en ella o corta la comunicación.",
+      "final": false,
+      "opciones": [
+        {
+          "id": "activar_codigo",
+          "texto": "Activar con código",
+          "destino": "E4",
+          "condiciones": {
+            "conoce_origen": true
+          },
+          "efectos": {
+            "confia_en_la_voz": true
+          }
+        },
+        {
+          "id": "activar_sin_verificar",
+          "texto": "Activar sin verificar",
+          "destino": "E5",
+          "condiciones": {
+            "conoce_origen": false
+          },
+          "efectos": {
+            "confia_en_la_voz": true
+          }
+        },
+        {
+          "id": "cortar",
+          "texto": "Cortar comunicación",
+          "destino": "E6",
+          "condiciones": {},
+          "efectos": {
+            "confia_en_la_voz": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "E4",
+      "texto": "La operadora reconoce el código de emergencia, activa la antena y guía a un equipo de rescate. La transmisión provenía de una expedición aislada.",
+      "final": true,
+      "opciones": []
+    },
+    {
+      "id": "E5",
+      "texto": "La operadora activa la antena sin comprobar el origen. Solo recibe un mensaje automático antiguo. La voz se repite hasta el amanecer.",
+      "final": true,
+      "opciones": []
+    },
+    {
+      "id": "E6",
+      "texto": "La operadora interrumpe la comunicación. El origen de la señal queda sin resolver.",
+      "final": true,
+      "opciones": []
+    }
+  ]
+}
