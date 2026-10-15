@@ -1,3 +1,11 @@
+"""Motor de historias interactivas - La última transmisión.
+
+Versión 2 (con deshacer de un solo nivel, por la solicitud de cambio).
+
+Uso:
+    python main.py                      -> carga la_ultima_transmision.json
+    python main.py otra_historia.json   -> carga otra historia sin tocar el código
+"""
 import copy
 import json
 import sys
@@ -220,7 +228,7 @@ class InterfazConsola:
 
     def leer_entrada(self):
         """Lee lo que escribe el lector."""
-        return input("\nElige una opción (o escribe 'reiniciar' / 'salir'): ").strip()
+        return input("\nElige una opción (o escribe 'deshacer' / 'reiniciar' / 'salir'): ").strip()
 
 
 # ==========================================
@@ -238,11 +246,22 @@ class Sesion:
 
         self.escena_actual_id = None
         self.variables = {}
+        # Un solo nivel de retroceso: copia del estado anterior a la última elección válida.
+        # None = no hay retroceso disponible.
+        self.instantanea = None
 
     def iniciar(self):
-        """Pone la escena inicial y las variables iniciales (sin modificar las del archivo)."""
+        """Pone la escena inicial y las variables iniciales (sin modificar las del archivo).
+
+        También elimina el historial: al comenzar no hay retroceso disponible.
+        """
         self.variables = copy.deepcopy(self.variables_iniciales)
         self.escena_actual_id = self.inicio
+        self.instantanea = None
+
+    def puede_deshacer(self):
+        """Indica si hay una elección válida que se pueda deshacer."""
+        return self.instantanea is not None
 
     def escena_actual(self):
         return self.escenas[self.escena_actual_id]
@@ -267,7 +286,14 @@ class Sesion:
                 break
 
         if opcion_elegida is None:
+            # Entrada inválida: no se toca ni el estado ni el historial.
             return False, "Opción inválida, inexistente o no habilitada por condiciones."
+
+        # Guarda el estado previo ANTES de aplicar efectos (reemplaza la instantánea anterior).
+        self.instantanea = {
+            "escena_id": self.escena_actual_id,
+            "variables": copy.deepcopy(self.variables),
+        }
 
         for clave, valor in opcion_elegida.get("efectos", {}).items():
             self.variables[clave] = valor
@@ -275,8 +301,22 @@ class Sesion:
         self.escena_actual_id = opcion_elegida["destino"]
         return True, "Avanzado con éxito."
 
+    def deshacer(self):
+        """Restaura la escena y las variables anteriores a la última elección válida.
+
+        Un solo nivel: consume la instantánea, así que no se puede volver a deshacer
+        hasta que se haga una nueva elección válida.
+        """
+        if self.instantanea is None:
+            return False, "No hay una elección anterior para deshacer."
+
+        self.escena_actual_id = self.instantanea["escena_id"]
+        self.variables = self.instantanea["variables"]
+        self.instantanea = None
+        return True, "Se deshizo la última elección."
+
     def reiniciar(self):
-        """Restaura la escena y las variables iniciales."""
+        """Restaura la escena y las variables iniciales y elimina el historial."""
         self.iniciar()
 
 
@@ -287,6 +327,19 @@ def cargar_historia(ruta):
     """Carga y valida. Devuelve (datos, errores). Lanza ErrorCarga si el archivo no se puede leer."""
     datos = CargadorHistoria().cargar(ruta)
     return datos, Validador().validar(datos)
+
+
+def aplicar_comando(sesion, comando):
+    """Ejecuta 'reiniciar' o 'deshacer'. Devuelve True si el texto era uno de esos comandos."""
+    if comando == "reiniciar":
+        sesion.reiniciar()
+        print("\n[Juego reiniciado]")
+        return True
+    if comando == "deshacer":
+        _, mensaje = sesion.deshacer()
+        print(f"\n[{mensaje}]")
+        return True
+    return False
 
 
 def jugar(datos):
@@ -302,22 +355,22 @@ def jugar(datos):
 
         if escena["final"]:
             print("\n--- FIN DE LA HISTORIA ---")
-            decision = input("¿Iniciar otra partida? (escribe 'reiniciar' o 'salir'): ").strip().lower()
-            if decision == "reiniciar":
-                sesion.reiniciar()
-                print("\n[Nueva partida iniciada]")
-                continue
-            print("\n¡Gracias por jugar!")
-            return
+            decision = input("¿Qué deseas hacer? (escribe 'reiniciar', 'deshacer' o 'salir'): ").strip().lower()
+            if decision == "salir":
+                print("\n¡Gracias por jugar!")
+                return
+            if not aplicar_comando(sesion, decision):
+                print("\n[Comando no reconocido]")
+            continue
 
         if not opciones:
             print("\n[BLOQUEO]: esta escena no es final, pero no hay opciones disponibles con las variables actuales.")
-            decision = input("Escribe 'reiniciar' para empezar de nuevo o 'salir' para terminar: ").strip().lower()
-            if decision == "reiniciar":
-                sesion.reiniciar()
-                print("\n[Juego reiniciado]")
-                continue
-            return
+            decision = input("Escribe 'reiniciar', 'deshacer' o 'salir': ").strip().lower()
+            if decision == "salir":
+                return
+            if not aplicar_comando(sesion, decision):
+                print("\n[Comando no reconocido]")
+            continue
 
         entrada = interfaz.leer_entrada()
         comando = entrada.lower()
@@ -325,9 +378,7 @@ def jugar(datos):
         if comando == "salir":
             print("\n¡Hasta luego!")
             return
-        if comando == "reiniciar":
-            sesion.reiniciar()
-            print("\n[Juego reiniciado]")
+        if aplicar_comando(sesion, comando):
             continue
 
         id_a_probar = entrada

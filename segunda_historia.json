@@ -1,0 +1,85 @@
+{
+  "titulo": "La biblioteca cerrada",
+  "inicio": "entrada",
+  "variables": {
+    "tiene_llave": false,
+    "alarma_activa": false
+  },
+  "escenas": [
+    {
+      "id": "entrada",
+      "texto": "Es de noche y la biblioteca universitaria está cerrada. Una llave brilla bajo el escritorio del vigilante, y al fondo hay una puerta con el letrero «Archivo».",
+      "final": false,
+      "opciones": [
+        {
+          "id": "tomar_llave",
+          "texto": "Tomar la llave",
+          "destino": "pasillo",
+          "condiciones": {},
+          "efectos": {
+            "tiene_llave": true
+          }
+        },
+        {
+          "id": "ir_sin_llave",
+          "texto": "Ir al pasillo sin la llave",
+          "destino": "pasillo",
+          "condiciones": {},
+          "efectos": {}
+        }
+      ]
+    },
+    {
+      "id": "pasillo",
+      "texto": "Llegas al pasillo del Archivo. La puerta tiene una cerradura antigua y, junto a ella, una luz roja apagada.",
+      "final": false,
+      "opciones": [
+        {
+          "id": "abrir_con_llave",
+          "texto": "Abrir la puerta con la llave",
+          "destino": "archivo",
+          "condiciones": {
+            "tiene_llave": true
+          },
+          "efectos": {}
+        },
+        {
+          "id": "forzar_puerta",
+          "texto": "Forzar la puerta",
+          "destino": "alarma",
+          "condiciones": {
+            "tiene_llave": false
+          },
+          "efectos": {
+            "alarma_activa": true
+          }
+        },
+        {
+          "id": "volver_a_casa",
+          "texto": "Volver a casa",
+          "destino": "casa",
+          "condiciones": {},
+          "efectos": {}
+        }
+      ]
+    },
+    {
+      "id": "archivo",
+      "texto": "La puerta cede sin ruido. Dentro encuentras el cuaderno que buscabas y sales antes del amanecer.",
+      "final": true,
+      "opciones": []
+    },
+    {
+      "id": "alarma",
+      "texto": "La cerradura se rompe y la luz roja se enciende. La alarma suena en todo el edificio y el vigilante llega corriendo.",
+      "final": true,
+      "opciones": []
+    },
+    {
+      "id": "casa",
+      "texto": "Decides que no vale la pena el riesgo y regresas a casa sin el cuaderno.",
+      "final": true,
+      "opciones": []
+    }
+  ]
+}
