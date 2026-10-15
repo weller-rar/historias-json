@@ -1,0 +1,6 @@
+0d121e0 | Weller | 2026-10-14 21:15:37 -0500 | first commit
+9f35083 | Weller | 2026-10-14 21:35:52 -0500 | v1
+1e224cc | Weller | 2026-10-14 23:24:20 -0500 | v2
+f259b2a | Weller | 2026-10-14 23:29:53 -0500 | v_2
+f19b5b3 | Weller | 2026-10-14 23:33:31 -0500 | ordenar (origin/main, origin/HEAD)
+733e33c | Weller | 2026-10-14 23:39:23 -0500 | Entrega final: pruebas, README y segunda historia (HEAD -> main)
