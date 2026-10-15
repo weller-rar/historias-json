@@ -1,0 +1,78 @@
+REGISTRO DE EJECUCIÓN DE PRUEBAS - La última transmisión
+Fecha y hora: 2026-10-14 23:33:09
+Python: 3.13.6
+Sistema operativo: Windows-11-10.0.26200-SP0
+Carpeta: C:\Users\kiefe\Downloads\parcial
+
+==============================================================================
+PRUEBAS AUTOMATIZADAS U1 a U6 e I1 (unittest)  |  RNF02 se verifica en U4
+==============================================================================
+test_carga_de_archivo_real_y_recorrido_hasta_un_final_con_deshacer (test_motor.PruebaI1Integracion.test_carga_de_archivo_real_y_recorrido_hasta_un_final_con_deshacer) ... ok
+test_consola_deshacer_desde_un_final_y_continuar (test_motor.PruebaI1Integracion.test_consola_deshacer_desde_un_final_y_continuar) ... ok
+test_consola_recorre_los_tres_finales (test_motor.PruebaI1Integracion.test_consola_recorre_los_tres_finales) ... ok
+test_consola_un_segundo_deshacer_seguido_no_cambia_nada (test_motor.PruebaI1Integracion.test_consola_un_segundo_deshacer_seguido_no_cambia_nada) ... ok
+test_la_consola_rechaza_entradas_invalidas_sin_alterar_la_partida (test_motor.PruebaI1Integracion.test_la_consola_rechaza_entradas_invalidas_sin_alterar_la_partida) ... ok
+test_segunda_historia_funciona_con_el_mismo_motor (test_motor.PruebaI1Integracion.test_segunda_historia_funciona_con_el_mismo_motor)
+RF10: otra historia, con otros IDs y variables, sin editar el motor. ... ok
+test_ca01_revisar_senal_e_investigar_deja_dos_opciones (test_motor.PruebaU1Condiciones.test_ca01_revisar_senal_e_investigar_deja_dos_opciones) ... ok
+test_evaluador_con_condiciones_cumplidas_y_no_cumplidas (test_motor.PruebaU1Condiciones.test_evaluador_con_condiciones_cumplidas_y_no_cumplidas) ... ok
+test_sesion_muestra_solo_opciones_compatibles_en_e3 (test_motor.PruebaU1Condiciones.test_sesion_muestra_solo_opciones_compatibles_en_e3) ... ok
+test_eleccion_valida_aplica_efectos_y_avanza (test_motor.PruebaU2Elegir.test_eleccion_valida_aplica_efectos_y_avanza) ... ok
+test_las_variables_del_archivo_no_se_modifican (test_motor.PruebaU2Elegir.test_las_variables_del_archivo_no_se_modifican) ... ok
+test_escena_no_final_sin_opciones_habilitadas_informa_bloqueo (test_motor.PruebaU3EntradaInvalida.test_escena_no_final_sin_opciones_habilitadas_informa_bloqueo) ... ok
+test_opcion_inexistente_o_no_habilitada_no_cambia_nada (test_motor.PruebaU3EntradaInvalida.test_opcion_inexistente_o_no_habilitada_no_cambia_nada) ... ok
+test_archivo_ilegible_se_rechaza_con_mensaje_controlado (test_motor.PruebaU4ErroresDeContenido.test_archivo_ilegible_se_rechaza_con_mensaje_controlado) ... ok
+test_archivo_invalido_nunca_abre_sesion_y_sale_con_codigo_controlado (test_motor.PruebaU4ErroresDeContenido.test_archivo_invalido_nunca_abre_sesion_y_sale_con_codigo_controlado)
+CA03 y RF18: destino E99 -> mensaje, sin sesión jugable, código de salida 1. ... ok
+test_el_validador_detecta_cada_error_y_nombra_causa_e_id (test_motor.PruebaU4ErroresDeContenido.test_el_validador_detecta_cada_error_y_nombra_causa_e_id) ... ok
+test_todas_las_categorias_terminan_con_codigo_controlado (test_motor.PruebaU4ErroresDeContenido.test_todas_las_categorias_terminan_con_codigo_controlado)
+RNF02: ningún error de contenido termina con una excepción no controlada. ... ok
+test_reiniciar_elimina_el_historial (test_motor.PruebaU5Reiniciar.test_reiniciar_elimina_el_historial) ... ok
+test_reiniciar_restaura_escena_y_variables_iniciales (test_motor.PruebaU5Reiniciar.test_reiniciar_restaura_escena_y_variables_iniciales) ... ok
+test_al_comenzar_no_hay_retroceso (test_motor.PruebaU6Deshacer.test_al_comenzar_no_hay_retroceso) ... ok
+test_deshacer_no_comparte_referencias_con_el_estado_posterior (test_motor.PruebaU6Deshacer.test_deshacer_no_comparte_referencias_con_el_estado_posterior) ... ok
+test_deshacer_restaura_escena_y_variables_y_consume_el_retroceso (test_motor.PruebaU6Deshacer.test_deshacer_restaura_escena_y_variables_y_consume_el_retroceso) ... ok
+test_ejemplo_de_la_solicitud_de_cambio (test_motor.PruebaU6Deshacer.test_ejemplo_de_la_solicitud_de_cambio) ... ok
+test_variante_desde_cada_final_se_regresa_a_e3_con_las_variables_previas (test_motor.PruebaU6Deshacer.test_variante_desde_cada_final_se_regresa_a_e3_con_las_variables_previas) ... ok
+test_variante_entrada_invalida_conserva_el_historial (test_motor.PruebaU6Deshacer.test_variante_entrada_invalida_conserva_el_historial) ... ok
+test_variante_solo_se_deshace_la_ultima_eleccion (test_motor.PruebaU6Deshacer.test_variante_solo_se_deshace_la_ultima_eleccion) ... ok
+test_variante_una_nueva_eleccion_vuelve_a_habilitar_el_retroceso (test_motor.PruebaU6Deshacer.test_variante_una_nueva_eleccion_vuelve_a_habilitar_el_retroceso) ... ok
+
+----------------------------------------------------------------------
+Ran 27 tests in 0.571s
+
+OK
+
+==============================================================================
+RNF01 - MODIFICABILIDAD DEL CONTENIDO (parte automática)
+==============================================================================
+RNF01 - Modificabilidad del contenido
+  Escena nueva agregada: E7 (2 opciones), editando solo el JSON
+  El motor carga y valida la historia modificada: sí
+  La nueva escena es alcanzable y muestra 2 opciones: sí
+  Se llega a un final desde la escena nueva: sí
+  main.py SHA-256 antes:   b37adae5cdefc5842c65d4f96022474cc8a4e7998c5cc2fdeaeea34be24a4ede
+  main.py SHA-256 después: b37adae5cdefc5842c65d4f96022474cc8a4e7998c5cc2fdeaeea34be24a4ede
+  Archivos de código cambiados: 0
+  Tiempo (<= 10 min): se mide a mano siguiendo el README (no lo mide este script).
+  RESULTADO (parte automática): CUMPLE
+
+==============================================================================
+RNF03 - CONFIABILIDAD (1.000 secuencias aleatorias)
+==============================================================================
+RNF03 - Confiabilidad
+  Semilla: 2026
+  Secuencias ejecutadas: 1000 (500 por historia, 2 historias)
+  Entradas simuladas: 40000
+  Entradas inválidas verificadas contra el estado: 31150
+  Entradas inválidas que alteraron escena, variables o historial: 0
+  Excepciones no controladas en la consola: 0
+  RESULTADO: CUMPLE
+
+==============================================================================
+RESUMEN
+==============================================================================
+PASA   PRUEBAS AUTOMATIZADAS U1 a U6 e I1 (unittest)
+PASA   RNF01 - MODIFICABILIDAD DEL CONTENIDO (parte automática)
+PASA   RNF03 - CONFIABILIDAD (1.000 secuencias aleatorias)
+RESULTADO GENERAL: TODO PASA
